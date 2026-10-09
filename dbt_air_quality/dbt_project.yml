@@ -1,0 +1,23 @@
+name: air_quality
+version: '1.0.0'
+config-version: 2
+profile: air_quality
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+clean-targets: ["target", "dbt_packages"]
+
+models:
+  air_quality:
+    staging:
+      +schema: SILVER
+      +materialized: view
+      +tags: ["silver", "staging"]
+    silver:
+      +schema: SILVER
+      +materialized: table
+      +tags: ["silver"]
+    gold:
+      +schema: GOLD
+      +materialized: table
+      +tags: ["gold"]

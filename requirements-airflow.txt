@@ -1,0 +1,10 @@
+apache-airflow-providers-snowflake>=6.13,<7
+confluent-kafka==2.11.1
+dbt-core==1.12.5
+dbt-snowflake==1.12.1
+great-expectations==1.23.2
+pandas>=2.2,<3
+PyYAML>=6,<7
+requests>=2.32,<3
+snowflake-connector-python[pandas]>=4.2,<5
+snowflake-sqlalchemy>=1.7,<2

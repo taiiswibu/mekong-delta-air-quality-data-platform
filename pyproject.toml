@@ -1,0 +1,26 @@
+[project]
+name = "vietnam-air-quality-data-platform"
+version = "1.0.0"
+description = "Portfolio-grade batch and streaming data engineering platform with Kafka, Airflow, Snowflake, dbt and Great Expectations."
+requires-python = ">=3.12"
+
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+
+[tool.sqlfluff.core]
+dialect = "snowflake"
+max_line_length = 120

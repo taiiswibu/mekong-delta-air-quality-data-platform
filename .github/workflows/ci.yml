@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements-dev.txt dbt-core==1.12.5 dbt-snowflake==1.12.1
+          pip install -e . --no-deps
+
+      - name: Prepare local config
+        run: |
+          cp .env.example .env
+          python scripts/generate_keypair.py
+
+      - name: Ruff
+        run: ruff check src kafka quality scripts dashboard tests
+
+      - name: Unit tests
+        run: pytest -q
+
+      - name: Validate Snowflake bootstrap SQL
+        run: sqlfluff parse snowflake/sql --dialect snowflake
+
+      - name: Parse dbt project
+        env:
+          SNOWFLAKE_ACCOUNT: dummy_account
+          SNOWFLAKE_USER: dummy_user
+          SNOWFLAKE_ROLE: SYSADMIN
+          SNOWFLAKE_WAREHOUSE: AQ_WH
+          SNOWFLAKE_DATABASE: AQ_WAREHOUSE
+          SNOWFLAKE_PRIVATE_KEY_PATH: ${{ github.workspace }}/.secrets/rsa_key.p8
+          SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: ''
+        run: dbt parse --project-dir dbt_air_quality --profiles-dir dbt_air_quality
+
+      - name: Validate Docker Compose
+        run: docker compose --env-file .env.example config >/dev/null

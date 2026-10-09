@@ -1,0 +1,40 @@
+project:
+  name: Mekong Delta Air Quality Data Platform
+  timezone: Asia/Ho_Chi_Minh
+
+waqi:
+  cities:
+    - can-tho
+    - an-giang
+    - dong-thap
+    - long-an
+    - tien-giang
+    - ben-tre
+    - vinh-long
+    - tra-vinh
+    - hau-giang
+    - soc-trang
+    - bac-lieu
+    - ca-mau
+    - kien-giang
+
+quality:
+  min_row_count: 1000
+  max_null_percent: 5.0
+  min_aqi: 0
+  max_aqi: 500
+  freshness_hours: 48
+  expected_city_count: 13
+  # Keep these values until the dbt historical source label is migrated.
+  expected_sources:
+    - api
+    - kaggle
+
+pipeline:
+  transform_schedule: "*/5 * * * *"
+  observability_schedule: "0 * * * *"
+  replay_delay_seconds: 1
+
+streamlit:
+  page_title: Mekong Delta Air Quality Intelligence
+  default_city: can-tho

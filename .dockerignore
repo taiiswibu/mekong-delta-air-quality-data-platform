@@ -1,0 +1,15 @@
+.git
+.github
+.env
+.secrets
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+airflow/logs
+data/raw
+data/sample
+dbt_air_quality/target
+dbt_air_quality/logs
+dbt_air_quality/dbt_packages

@@ -1,0 +1,60 @@
+version: 2
+
+models:
+  - name: dim_date
+    columns:
+      - name: date_key
+        data_tests: [unique, not_null]
+  - name: dim_time
+    columns:
+      - name: time_key
+        data_tests: [unique, not_null]
+  - name: dim_city
+    columns:
+      - name: city_key
+        data_tests: [unique, not_null]
+      - name: city_slug
+        data_tests: [unique, not_null]
+  - name: dim_station
+    columns:
+      - name: station_key
+        data_tests: [unique, not_null]
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+  - name: fact_aqi
+    columns:
+      - name: measurement_key
+        data_tests: [unique, not_null]
+      - name: city_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_city')
+                field: city_key
+      - name: station_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_station')
+                field: station_key
+      - name: date_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_key
+      - name: time_key
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_time')
+                field: time_key

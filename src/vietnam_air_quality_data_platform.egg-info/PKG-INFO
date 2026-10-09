@@ -1,0 +1,5 @@
+Metadata-Version: 2.4
+Name: vietnam-air-quality-data-platform
+Version: 1.0.0
+Summary: Portfolio-grade batch and streaming data engineering platform with Kafka, Airflow, Snowflake, dbt and Great Expectations.
+Requires-Python: >=3.12

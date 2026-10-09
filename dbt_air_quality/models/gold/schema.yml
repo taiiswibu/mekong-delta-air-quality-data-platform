@@ -1,0 +1,28 @@
+version: 2
+
+models:
+  - name: aqi_daily_summary
+    columns:
+      - name: queried_city
+        data_tests: [not_null]
+      - name: date
+        data_tests: [not_null]
+  - name: aqi_latest_status
+    columns:
+      - name: queried_city
+        data_tests: [unique, not_null]
+      - name: aqi
+        data_tests: [not_null]
+  - name: aqi_city_ranking
+    columns:
+      - name: queried_city
+        data_tests: [not_null]
+
+  - name: aqi_region_summary
+    columns:
+      - name: region
+        data_tests: [not_null]
+      - name: year
+        data_tests: [not_null]
+      - name: month
+        data_tests: [not_null]

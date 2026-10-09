@@ -1,0 +1,24 @@
+version: 2
+
+sources:
+  - name: bronze
+    database: AQ_WAREHOUSE
+    schema: BRONZE
+    tables:
+      - name: api_raw
+        identifier: API_RAW
+        loaded_at_field: ingested_at
+        freshness:
+          warn_after: {count: 2, period: hour}
+          error_after: {count: 48, period: hour}
+      - name: historical_csv
+        identifier: HISTORICAL_CSV
+
+  - name: control
+    database: AQ_WAREHOUSE
+    schema: CONTROL
+    tables:
+      - name: city_map
+        identifier: CITY_MAP
+      - name: city_reference
+        identifier: CITY_REFERENCE
